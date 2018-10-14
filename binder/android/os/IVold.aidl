@@ -65,7 +65,7 @@ interface IVold {
     void fdeRestart();
     int fdeComplete();
     void fdeEnable(int passwordType, @utf8InCpp String password, int encryptionFlags);
-    void fdeChangePassword(int passwordType, @utf8InCpp String password);
+    void fdeChangePassword(int passwordType, @utf8InCpp String currentPassword, @utf8InCpp String password);
     void fdeVerifyPassword(@utf8InCpp String password);
     @utf8InCpp String fdeGetField(@utf8InCpp String key);
     void fdeSetField(@utf8InCpp String key, @utf8InCpp String value);
@@ -85,6 +85,7 @@ interface IVold {
     void destroyUserKey(int userId);
 
     void addUserKeyAuth(int userId, int userSerial, @utf8InCpp String token, @utf8InCpp String secret);
+    void clearUserKeyAuth(int userId, int userSerial, @utf8InCpp String token, @utf8InCpp String secret);
     void fixateNewestUserKeyAuth(int userId);
 
     void unlockUserKey(int userId, int userSerial, @utf8InCpp String token, @utf8InCpp String secret);

@@ -180,7 +180,9 @@ status_t VolumeBase::doCreate() {
 }
 
 status_t VolumeBase::destroy() {
-    CHECK(mCreated);
+    if (!mCreated) {
+        return NO_INIT;
+    }
 
     if (mState == State::kMounted) {
         unmount();

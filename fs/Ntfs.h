@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2015 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,28 @@
  * limitations under the License.
  */
 
-#ifndef _LOOP_H
-#define _LOOP_H
+#ifndef ANDROID_VOLD_NTFS_H
+#define ANDROID_VOLD_NTFS_H
+
+#include <utils/Errors.h>
 
 #include <string>
-#include <unistd.h>
-#include <linux/loop.h>
 
-class Loop {
-public:
-    static const int LOOP_MAX = 4096;
-public:
-    static int create(const std::string& file, std::string& out_device);
-    static int destroyByDevice(const char *loopDevice);
-    static int destroyAll();
-    static int createImageFile(const char *file, unsigned long numSectors);
-    static int resizeImageFile(const char *file, unsigned long numSectors);
-};
+namespace android {
+namespace vold {
+namespace ntfs {
+
+bool IsSupported();
+
+status_t Check(const std::string& source);
+status_t Mount(const std::string& source, const std::string& target, bool ro,
+        bool remount, bool executable, int ownerUid, int ownerGid, int permMask,
+        bool createLost);
+status_t Format(const std::string& source, bool wipe);
+
+}  // namespace ntfs
+}  // namespace vold
+}  // namespace android
 
 #endif
+

@@ -119,8 +119,10 @@ cc_library_static {
         "fs/Exfat.cpp",
         "fs/Ext4.cpp",
         "fs/F2fs.cpp",
+        "fs/Ntfs.cpp",
         "fs/Vfat.cpp",
         "model/Disk.cpp",
+        "model/DiskPartition.cpp",
         "model/EmulatedVolume.cpp",
         "model/ObbVolume.cpp",
         "model/PrivateVolume.cpp",
@@ -137,6 +139,16 @@ cc_library_static {
                 "arc_services_aidl",
                 "libarcobbvolume",
             ],
+        },
+        lineage: {
+            device_support_hwfde: {
+                cflags: ["-DCONFIG_HW_DISK_ENCRYPTION"],
+                header_libs: ["libcryptfs_hw_headers"],
+                shared_libs: ["libcryptfs_hw"],
+            },
+            device_support_hwfde_perf: {
+                cflags: ["-DCONFIG_HW_DISK_ENCRYPT_PERF"],
+            },
         },
     },
 }
@@ -156,6 +168,11 @@ cc_binary {
                 "arc_services_aidl",
                 "libarcobbvolume",
             ],
+        },
+        lineage: {
+            device_support_hwfde: {
+                shared_libs: ["libcryptfs_hw"],
+            },
         },
     },
     init_rc: [
@@ -247,3 +264,4 @@ filegroup {
 }
 
 subdirs = ["tests"]
+
